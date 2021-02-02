@@ -59,17 +59,22 @@ const pedirCarta = () => {
 const valorCarta = ( carta ) => {
     //Extraer el valor númerico y combertirlo a number
     const valor = carta.substring(0, carta.length - 1);
-    let puntos = 0;
-    // console.log( { valor } );
+    return ( isNaN( valor)) ? 
+            (valor === 'A') ? 11: 10 
+            : valor * 1 ;
+    // let puntos = 0;
+    // // console.log( { valor } );
 
-    if ( isNaN( valor )) {
-        //console.log('No es un número');
-        puntos = (valor === 'A' ) ? 11 : 10;
-    }else {
-        //console.log('Es un número');
-        puntos = valor * 1;
-    }
-    console.log(puntos);
+    // if ( isNaN( valor )) {
+    //     //console.log('No es un número');
+    //     puntos = (valor === 'A' ) ? 11 : 10;
+    // }else {
+    //     //console.log('Es un número');
+    //     puntos = valor * 1;
+    // }
+    // console.log(puntos);
 } 
 
-valorCarta('9D');
+const valor = valorCarta(pedirCarta());
+
+console.log({ valor })
