@@ -99,12 +99,18 @@ btnPedir.addEventListener('click', ()=>{
     puntosJugador += valorCarta(carta);
     puntosHTML[0].innerHTML = puntosJugador;
 
-    // <!-- <img class="carta" src="assets/cartas/10C.png" alt=""> -->
     const imgCarta = document.createElement('img');
     imgCarta.src = `assets/cartas/${carta}.png`; 
     imgCarta.classList.add('carta');    
     divCartasJugador.append(imgCarta);
    
+    if (puntosJugador > 21) {
+        console.warn('Lo siento mucho, perdiste');
+        btnPedir.disabled = true;
+    } else if (puntosJugador  === 21){
+        console.warn('21 - genial');
+        btnPedir.disabled = true;
+    }
 
 });
 
