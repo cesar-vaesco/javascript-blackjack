@@ -26,7 +26,10 @@ const divCartasComputadora = document.querySelector('#computadora-cartas');
 const puntosHTML = document.querySelectorAll('small');
 //console.log(marcadorJugador);
 
+/**Botón detener deshabilitado al inicio del juego  */
 btnDetener.disabled = true;
+
+
 
 // for (let i = 0; i <= tipos.length; i++) {
 //     console.log(tipos[i]);
@@ -218,4 +221,12 @@ btnNuevo.addEventListener('click', () => {
 
     btnPedir.disabled = false;
     btnDetener.disabled = true;
+
+    setTimeout(() => {
+        if(btnNuevo.disabled == false){
+            btnNuevo.disabled = true;
+        }else {
+            btnNuevo.disabled = false;
+        }
+    }, 10);
 });
