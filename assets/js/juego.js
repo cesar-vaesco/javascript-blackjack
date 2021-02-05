@@ -11,12 +11,14 @@ const especiales = ['A', 'J', 'Q', 'K'];
 let puntosJugador = 0,
     puntosComputadora = 0;
 
-    
+
 // Referencias HTML
 const btnPedir = document.querySelector('#btnPedir');
 // console.log( btnPedir );
 const btnDetener = document.querySelector('#btnDetener');
 //console.log(btnDetener)
+const btnNuevo = document.querySelector('#btnNuevo');
+// console.log(btnNuevo);
 const divCartasJugador = document.querySelector('#jugador-cartas');
 // console.log(divCartasJugador)
 const divCartasComputadora = document.querySelector('#computadora-cartas');
@@ -24,7 +26,7 @@ const divCartasComputadora = document.querySelector('#computadora-cartas');
 const puntosHTML = document.querySelectorAll('small');
 //console.log(marcadorJugador);
 
-btnDetener.disabled= true;
+btnDetener.disabled = true;
 
 // for (let i = 0; i <= tipos.length; i++) {
 //     console.log(tipos[i]);
@@ -58,7 +60,7 @@ crearDeck();
 
 const pedirCarta = () => {
 
-   
+
     // Validar existencia de cartas
 
     if (deck.length === 0) {
@@ -122,25 +124,25 @@ const turnoComputadora = (puntosMinimos) => {
                 title: "Empate!",
                 text: "Nadie gana :(´....!",
                 icon: "error",
-              });
+            });
         } else if (puntosMinimos > 21) {
             swal({
                 title: "Perdiste!",
-                text:`Puntos jugador: ${puntosJugador} - computadora:${puntosComputadora}, Computadora gana :(´....!`,
+                text: `Puntos jugador: ${puntosJugador} - computadora:${puntosComputadora}, Computadora gana :(´....!`,
                 icon: "error",
-              });
+            });
         } else if (puntosComputadora > 21) {
             swal({
                 title: "Ganaste!",
                 text: `Puntos jugador: ${puntosJugador} - computadora:${puntosComputadora}, Manca esa computadora... :)!`,
                 icon: "success",
-              });
+            });
         } else {
             swal({
                 title: "Perdiste!",
                 text: "Computadora gana :(´....!",
                 icon: "error",
-              });
+            });
         }
     }, 100);
 
@@ -161,14 +163,14 @@ btnPedir.addEventListener('click', () => {
     //     btnDetener.disabled = true;
     // }
 
-    
-    
+
+    btnNuevo.disabled = true;
     const carta = pedirCarta();
     puntosJugador += valorCarta(carta);
     puntosHTML[0].innerHTML = puntosJugador;
-    
-    if(puntosJugador > 1 ){
-        btnDetener.disabled= false;
+
+    if (puntosJugador > 1) {
+        btnDetener.disabled = false;
     }
     const imgCarta = document.createElement('img');
     imgCarta.src = `assets/cartas/${carta}.png`;
@@ -179,6 +181,7 @@ btnPedir.addEventListener('click', () => {
         //console.warn('Lo siento mucho, perdiste');
         btnPedir.disabled = true;
         btnDetener.disabled = true;
+        btnNuevo.disabled = false;
         turnoComputadora(puntosJugador);
     } else if (puntosJugador === 21) {
         //console.warn('21 - genial');
@@ -190,13 +193,29 @@ btnPedir.addEventListener('click', () => {
 });
 
 btnDetener.addEventListener('click', () => {
-   
+
     btnPedir.disabled = true;
     btnDetener.disabled = true;
     turnoComputadora(puntosJugador);
-
+    btnNuevo.disabled = false;
 });
 
 /*-- TODO: Borrar --*/
 // console.log( 15 )
 //  turnoComputadora( 15 );
+
+
+btnNuevo.addEventListener('click', () => {
+    console.clear();
+    deck = [];
+    deck = crearDeck();
+    puntosJugador = 0;
+    puntosComputadora = 0;
+    puntosHTML[0].innerText = 0;
+    puntosHTML[1].innerText = 0;
+    divCartasComputadora.innerHTML = '';
+    divCartasJugador.innerHTML = '';
+
+    btnPedir.disabled = false;
+    btnDetener.disabled = true;
+});
