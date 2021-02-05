@@ -11,6 +11,7 @@ const especiales = ['A', 'J', 'Q', 'K'];
 let puntosJugador = 0,
     puntosComputadora = 0;
 
+    
 // Referencias HTML
 const btnPedir = document.querySelector('#btnPedir');
 // console.log( btnPedir );
@@ -23,6 +24,7 @@ const divCartasComputadora = document.querySelector('#computadora-cartas');
 const puntosHTML = document.querySelectorAll('small');
 //console.log(marcadorJugador);
 
+btnDetener.disabled= true;
 
 // for (let i = 0; i <= tipos.length; i++) {
 //     console.log(tipos[i]);
@@ -56,6 +58,7 @@ crearDeck();
 
 const pedirCarta = () => {
 
+   
     // Validar existencia de cartas
 
     if (deck.length === 0) {
@@ -115,13 +118,29 @@ const turnoComputadora = (puntosMinimos) => {
     setTimeout(() => {
 
         if (puntosComputadora === puntosMinimos) {
-            alert('Nadie gana :(´....');
+            swal({
+                title: "Empate!",
+                text: "Nadie gana :(´....!",
+                icon: "error",
+              });
         } else if (puntosMinimos > 21) {
-            alert('Computadora gana...');
+            swal({
+                title: "Perdiste!",
+                text:`Puntos jugador: ${puntosJugador} - computadora:${puntosComputadora}, Computadora gana :(´....!`,
+                icon: "error",
+              });
         } else if (puntosComputadora > 21) {
-            alert('La computadora te la pela...Ganaste!!')
+            swal({
+                title: "Ganaste!",
+                text: `Puntos jugador: ${puntosJugador} - computadora:${puntosComputadora}, Manca esa computadora... :)!`,
+                icon: "success",
+              });
         } else {
-            alert('Computadora gana :(´');
+            swal({
+                title: "Perdiste!",
+                text: "Computadora gana :(´....!",
+                icon: "error",
+              });
         }
     }, 100);
 
@@ -137,22 +156,32 @@ btnPedir.addEventListener('click', () => {
     // console.log(puntos);
     // puntosJugador += puntos;
     // console.log(puntosJugador);
+
+    // if( carta === null){
+    //     btnDetener.disabled = true;
+    // }
+
+    
+    
     const carta = pedirCarta();
     puntosJugador += valorCarta(carta);
     puntosHTML[0].innerHTML = puntosJugador;
-
+    
+    if(puntosJugador > 1 ){
+        btnDetener.disabled= false;
+    }
     const imgCarta = document.createElement('img');
     imgCarta.src = `assets/cartas/${carta}.png`;
     imgCarta.classList.add('carta');
     divCartasJugador.append(imgCarta);
 
     if (puntosJugador > 21) {
-        console.warn('Lo siento mucho, perdiste');
+        //console.warn('Lo siento mucho, perdiste');
         btnPedir.disabled = true;
         btnDetener.disabled = true;
         turnoComputadora(puntosJugador);
     } else if (puntosJugador === 21) {
-        console.warn('21 - genial');
+        //console.warn('21 - genial');
         btnPedir.disabled = true;
         btnDetener.disabled = true;
         turnoComputadora(puntosJugador);
@@ -161,6 +190,7 @@ btnPedir.addEventListener('click', () => {
 });
 
 btnDetener.addEventListener('click', () => {
+   
     btnPedir.disabled = true;
     btnDetener.disabled = true;
     turnoComputadora(puntosJugador);
