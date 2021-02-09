@@ -1,5 +1,5 @@
 /*-- El patrón módulo consiste en un módulo donde se encapsulará toda la lógica de nuestra aplicación o proyecto.
-     Dentro de este módulo estarán declaradas todas las variables o funciones privadas 
+     Dentro de este módulo estarán declaradas todas las variables o funciones privadas
      y sólo serán visibles dentro del mismo. --*/
 
 const miModulo = (() => {
@@ -8,7 +8,7 @@ const miModulo = (() => {
     let deck = [];
     const tipos = ['C', 'D', 'H', 'S'],
           especiales = ['A', 'J', 'Q', 'K'];
-    
+
     // let puntosJugador = 0,
     //     puntosComputadora = 0;
     let puntosJugadores = [];
@@ -30,13 +30,13 @@ const miModulo = (() => {
         for (let i = 0; i < numJugadores; i++) {
             puntosJugadores.push(0);
         }
-      
+
         puntosHTML.forEach ( (elemento) => elemento.innerText = 0);
         divCartasJugadores.forEach( (elemento) => elemento.innerHTML = '');
-      
+
         btnPedir.disabled = false;
         btnDetener.disabled = true;
-    } 
+    }
 
     /**Botón detener deshabilitado al inicio del juego  */
     // btnDetener.disabled = true;
@@ -44,7 +44,7 @@ const miModulo = (() => {
 
     // Esta función crea una nueva baraja - deck
     const crearDeck = () => {
-    
+
         deck = [];
         for (let i = 2; i <= 10; i++) {
             for (const tipo of tipos) {
@@ -81,7 +81,7 @@ const miModulo = (() => {
             (valor === 'A') ? 11 : 10
             : valor * 1;
     }
-    
+
     // Acumular puntos
     // Turno: 0 = primer jugador y el último sera la computadora
     const acumularPuntos = ( carta, turno) => {
@@ -90,7 +90,7 @@ const miModulo = (() => {
         puntosHTML[turno].innerText =  puntosJugadores[turno];
 
         return puntosJugadores[ turno ];
-    } 
+    }
 
     const crearCarta = ( carta, turno) => {
 
@@ -98,8 +98,8 @@ const miModulo = (() => {
         imgCarta.src = `assets/cartas/${carta}.png`;
         imgCarta.classList.add('carta');
         divCartasJugadores[turno].append( imgCarta );
-        
-    } 
+
+    }
 
     /*-- Turno de la computadora --*/
     const turnoComputadora = (puntosMinimos) => {
@@ -108,7 +108,7 @@ const miModulo = (() => {
 
         do {
             const carta = pedirCarta();
-            
+
             puntosComputadora = acumularPuntos(carta, puntosJugadores.length -1 );
 
             crearCarta(carta, puntosJugadores.length -1);
@@ -117,7 +117,7 @@ const miModulo = (() => {
             // imgCarta.classList.add('carta');
             // divCartasComputadora.append(imgCarta);
 
-            
+
         } while ((puntosComputadora < puntosMinimos) && (puntosMinimos <= 21));
 
         determinarGanador();
@@ -159,13 +159,13 @@ const miModulo = (() => {
             }
         }, 100);
 
-     } 
+     }
 
 
     /*-- Eventos --*/
     btnPedir.addEventListener('click', () => {
         btnNuevo.disabled = true;
-        
+
         const carta = pedirCarta();
         const puntosJugador = acumularPuntos( carta, 0 );
         // puntosJugador += valorCarta(carta);
@@ -187,6 +187,7 @@ const miModulo = (() => {
             btnNuevo.disabled = false;
             turnoComputadora(puntosJugador);
         } else if (puntosJugador === 21) {
+            btnNuevo.disabled = false;
             btnPedir.disabled = true;
             btnDetener.disabled = true;
             turnoComputadora(puntosJugador);
@@ -203,7 +204,7 @@ const miModulo = (() => {
 
 
     btnNuevo.addEventListener('click', () => {
-    
+
         inicializarJuego();
     });
 
